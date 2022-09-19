@@ -23,6 +23,7 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(true);
             });
 
+
             Property(b => b.isSold, x =>
             {
                 x.Length(50);
@@ -59,6 +60,7 @@ namespace SinemYoruc_Project.Data
             });
 
             ManyToOne(product => product.Category, map => map.Column("CategoryId"));
+            ManyToOne(product => product.Account, map => map.Column("AccountId"));
 
             Table("product");
         }

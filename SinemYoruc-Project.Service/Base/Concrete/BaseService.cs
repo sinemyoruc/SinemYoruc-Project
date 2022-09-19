@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using NHibernate;
+using Serilog;
 using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +59,7 @@ namespace SinemYoruc_Project.Service
         {
             try
             {
-                var tempEntity = mapper.Map<Dto, Entity>(insertResource);              
+                var tempEntity = mapper.Map<Dto, Entity>(insertResource);
 
                 hibernateRepository.BeginTransaction();
                 hibernateRepository.Save(tempEntity);

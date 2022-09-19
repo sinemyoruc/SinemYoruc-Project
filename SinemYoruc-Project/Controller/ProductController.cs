@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
 using SinemYoruc_Project.Dto;
 using SinemYoruc_Project.Service;
@@ -20,6 +21,21 @@ namespace SinemYoruc_Project.Controller
         {
             this.mapper = mapper;
             this.productService = productService;
+        }
+
+
+        [HttpPost("ProductDetails")]
+        public BaseResponse<Product> ProductDetails([FromBody] ProductDetail request)
+        {
+            var response = productService.ProductDetails(request);
+            return response;
+        }
+
+        [HttpGet("SoldProduct")]
+        public BaseResponse<Product> SoldProduct(int id)
+        {
+            var response = productService.SoldProducts(id);
+            return response;
         }
     }
 }

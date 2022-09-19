@@ -6,6 +6,7 @@ using SinemYoruc_Project.Data;
 using SinemYoruc_Project.Dto;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SinemYoruc_Project.Service
 {
@@ -16,7 +17,7 @@ namespace SinemYoruc_Project.Service
         protected readonly IMapper mapper;
         protected readonly IHibernateRepository<Product> hibernateRepositoryProduct;
         protected readonly IHibernateRepository<Category> hibernateRepositoryCategory;
-        protected readonly IProductService service;
+        protected readonly IHibernateRepository<ProductDetail> hibernateRepositoryProductDetail;
 
 
         public ProductService(ISession session, IMapper mapper) : base (session, mapper)
@@ -26,6 +27,7 @@ namespace SinemYoruc_Project.Service
 
             hibernateRepositoryProduct = new HibernateRepository<Product>(session);
             hibernateRepositoryCategory = new HibernateRepository<Category>(session);
+            hibernateRepositoryProductDetail = new HibernateRepository<ProductDetail>(session);
         }
 
         public virtual BaseResponse<IEnumerable<ProductDto>> GetAll()
@@ -49,7 +51,7 @@ namespace SinemYoruc_Project.Service
             {
                 var product = mapper.Map<ProductDto, Product>(insertResource);
                 var category = product.Category;
-                product.Category = null;
+                product.Category = insertResource.Category;
                 hibernateRepositoryProduct.BeginTransaction();
                 hibernateRepositoryProduct.Save(product);
                 hibernateRepositoryProduct.Commit();
@@ -71,5 +73,41 @@ namespace SinemYoruc_Project.Service
             }
         }
 
-    }
+        public BaseResponse<Product> ProductDetails(ProductDetail productDetail)
+        {
+            var product = hibernateRepository.Where(x => x.Id.Equals(productDetail.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
+            if (product.isOfferable == true) 
+            {
+                product.ProductDetail = productDetail;
+                //DB 
+                hibernateRepositoryProductDetail.BeginTransaction();
+                hibernateRepositoryProductDetail.Save(productDetail);
+                hibernateRepositoryProductDetail.Commit();
+                hibernateRepositoryProductDetail.CloseTransaction();
+
+                return new BaseResponse<Product>(product);
+            }
+            else
+            {
+                return new BaseResponse<Product>("No offers can be made for this product.");
+            }
+        }
+
+        public BaseResponse<Product> SoldProducts(int id)
+        {
+            //isSold and isOfferable fields are updated when the product is sold
+
+            var product = hibernateRepository.Where(x => x.Id == id).FirstOrDefault(); //Retrieving the product with the desired id
+            product.isSold = true;
+            product.isOfferable = false;
+
+            hibernateRepository.BeginTransaction();
+            hibernateRepository.Save(product);
+            hibernateRepository.Commit();
+            hibernateRepository.CloseTransaction();
+
+            return new BaseResponse<Product>(product);
+        }
+
+     }
 }

@@ -45,7 +45,7 @@ namespace SinemYoruc_Project.Service
                 try
                 {
                     //Validation Check
-                    MemberValidator validations = new MemberValidator();
+                    AccountValidator validations = new AccountValidator();
                     ValidationResult result = validations.Validate(tempEntity);
                     validations.ValidateAndThrow(tempEntity);
                 }

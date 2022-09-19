@@ -11,7 +11,8 @@ namespace SinemYoruc_Project.Data
         public virtual string Description { get; set; }
         public virtual string Color { get; set; }
         public virtual double Price { get; set; }
-
         public virtual Category Category { get; set; }
+        public virtual ProductDetail ProductDetail { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

@@ -23,13 +23,6 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(true);
             });
 
-            Property(b => b.isOfferable, x =>
-            {
-                x.Length(50);
-                x.Type(NHibernateUtil.Boolean);
-                x.NotNullable(true);
-            });
-
             Property(b => b.Offer, x =>
             {
                 x.Length(50);
