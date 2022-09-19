@@ -144,6 +144,7 @@ namespace SinemYoruc_Project.Service
                 {
                     result.isOfferable = false;
                     result.isSold = true;
+                    result.ProductsOffer.OfferStatus = true;
                     return new BaseResponse<Product>(result);
                 }
                 else
@@ -168,10 +169,8 @@ namespace SinemYoruc_Project.Service
                 {
                     result.isOfferable = true;
                     result.isSold = false;
-                    hibernateRepositoryProduct.BeginTransaction();
-                    hibernateRepositoryProduct.Delete(result.ProductsOffer.Id);
-                    hibernateRepositoryProduct.Commit();
-                    return new BaseResponse<Product>("Offer refused and deleted.");
+                    result.ProductsOffer.OfferStatus = false;
+                    return new BaseResponse<Product>("Offer refused.");
                 }
                 else
                 {
@@ -182,8 +181,6 @@ namespace SinemYoruc_Project.Service
             {
 
                 Log.Error("AccountService.RefuseOffer", ex);
-                hibernateRepository.Rollback();
-                hibernateRepository.CloseTransaction();
                 return new BaseResponse<Product>(ex.Message);
             }
             

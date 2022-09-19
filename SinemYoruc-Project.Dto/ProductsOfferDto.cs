@@ -13,6 +13,7 @@ namespace SinemYoruc_Project
         [Required]
         public int ProductId { get; set; }
         public int OfferAccountId { get; set; }
+        public bool OfferStatus { get; set; }
 
     }
 }

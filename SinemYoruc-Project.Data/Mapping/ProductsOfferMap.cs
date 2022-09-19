@@ -37,6 +37,13 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(true);
             });
 
+            Property(x => x.OfferStatus, x =>
+            {
+                x.Length(50);
+                x.Type(NHibernateUtil.Boolean);
+                x.NotNullable(false);
+            });
+
             Table("productsoffer");
         }
     }
