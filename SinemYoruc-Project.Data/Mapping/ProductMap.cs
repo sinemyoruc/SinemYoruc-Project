@@ -6,7 +6,7 @@ namespace SinemYoruc_Project.Data
 {
     public class ProductMap : ClassMapping<Product>
     {
-        public ProductMap() 
+        public ProductMap()
         {
             Id(x => x.Id, x =>
             {
@@ -59,8 +59,16 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(true);
             });
 
+            Property(b => b.AccountId, x =>
+            {
+                x.Length(50);
+                x.Type(NHibernateUtil.Int32);
+                x.NotNullable(false);
+            });
+
+            ManyToOne(product => product.ProductsOffer, map => map.Column("ProductId"));
+
             ManyToOne(product => product.Category, map => map.Column("CategoryId"));
-            ManyToOne(product => product.Account, map => map.Column("AccountId"));
 
             Table("product");
         }

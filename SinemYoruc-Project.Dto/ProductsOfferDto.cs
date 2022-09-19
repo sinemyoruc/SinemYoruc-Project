@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SinemYoruc_Project
 {
-    public class ProductDetailDto
+    public class ProductsOfferDto
     {
         [Required]
         public bool isOfferable { get; set; }
@@ -17,7 +12,7 @@ namespace SinemYoruc_Project
 
         [Required]
         public int ProductId { get; set; }
-
+        public int OfferAccountId { get; set; }
 
     }
 }

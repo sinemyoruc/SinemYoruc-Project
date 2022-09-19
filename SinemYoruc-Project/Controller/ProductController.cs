@@ -24,10 +24,10 @@ namespace SinemYoruc_Project.Controller
         }
 
 
-        [HttpPost("ProductDetails")]
-        public BaseResponse<Product> ProductDetails([FromBody] ProductDetail request)
+        [HttpPost("ProductsOffer")]
+        public BaseResponse<Product> ProductsOffer([FromBody] ProductsOffer request)
         {
-            var response = productService.ProductDetails(request);
+            var response = productService.ProductsOffer(request);
             return response;
         }
 

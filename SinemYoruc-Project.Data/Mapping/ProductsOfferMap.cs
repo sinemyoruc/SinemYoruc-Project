@@ -4,9 +4,9 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace SinemYoruc_Project.Data
 {
-    public class ProductDetailMap : ClassMapping<ProductDetail>
+    public class ProductsOfferMap : ClassMapping<ProductsOffer>
     {
-        public ProductDetailMap()
+        public ProductsOfferMap()
         {
             Id(x => x.Id, x =>
             {
@@ -30,7 +30,14 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(true);
             });
 
-            Table("productdetail");
+            Property(x => x.OfferAccountId, x =>
+            {
+                x.Length(50);
+                x.Type(NHibernateUtil.Int32);
+                x.NotNullable(true);
+            });
+
+            Table("productsoffer");
         }
     }
 }
