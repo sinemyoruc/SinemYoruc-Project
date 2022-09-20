@@ -2,10 +2,13 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SinemYoruc_Project.Base;
+using SinemYoruc_Project.Dto;
+using SinemYoruc_Project.Hangfire;
 using SinemYoruc_Project.StartUpExtension;
 using System;
 
@@ -25,6 +28,7 @@ namespace SinemYoruc_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<JobDelayed>(Configuration.GetSection("MailingService"));
 
             //hangfire 
             services.AddHangfire(configuration => configuration
