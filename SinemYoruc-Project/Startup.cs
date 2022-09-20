@@ -1,3 +1,5 @@
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SinemYoruc_Project.Base;
 using SinemYoruc_Project.StartUpExtension;
+using System;
 
 namespace SinemYoruc_Project
 {
@@ -22,6 +25,21 @@ namespace SinemYoruc_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //hangfire 
+            services.AddHangfire(configuration => configuration
+               .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+               .UseSimpleAssemblyNameTypeSerializer()
+               .UseRecommendedSerializerSettings()
+               .UsePostgreSqlStorage(Configuration.GetConnectionString("PostgreSqlConnection"), new PostgreSqlStorageOptions
+               {
+                   TransactionSynchronisationTimeout = TimeSpan.FromMinutes(5),
+                   InvisibilityTimeout = TimeSpan.FromMinutes(5),
+                   QueuePollInterval = TimeSpan.FromMinutes(5),
+               }));
+
+
+            services.AddHangfireServer();
 
             // hibernate
             var connStr = Configuration.GetConnectionString("PostgreSqlConnection");
@@ -55,6 +73,8 @@ namespace SinemYoruc_Project
 
             app.UseHttpsRedirection();
 
+            // hangfire dashboard 
+            app.UseHangfireDashboard();
 
             // add auth 
             app.UseAuthentication();

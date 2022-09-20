@@ -60,11 +60,6 @@ namespace SinemYoruc_Project.Service
                 hibernateRepositoryProduct.Commit();
                 hibernateRepositoryProduct.CloseTransaction();
 
-                hibernateRepositoryCategory.BeginTransaction();
-                hibernateRepositoryCategory.Save(category);
-                hibernateRepositoryCategory.Commit();
-                hibernateRepositoryCategory.CloseTransaction();
-
                 return new BaseResponse<ProductDto>(mapper.Map<Product, ProductDto>(product));
             }
             catch (Exception ex)
@@ -78,7 +73,7 @@ namespace SinemYoruc_Project.Service
 
         public BaseResponse<Product> ProductsOffer(ProductsOffer productsOffer)
         {
-            var product = hibernateRepository.Where(x => x.Id.Equals(productsOffer.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
+            var product = hibernateRepositoryProduct.Where(x => x.Id.Equals(productsOffer.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
             if (product != null) {  
                 if (product.isOfferable == true) {
                     product.ProductsOffer = productsOffer;

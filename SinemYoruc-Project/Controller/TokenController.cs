@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Service;
-
+using System;
 
 namespace SinemYoruc_Project.Controller
 {

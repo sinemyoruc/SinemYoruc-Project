@@ -144,6 +144,7 @@ namespace SinemYoruc_Project.Service
                     result.isOfferable = false;
                     result.isSold = true;
                     result.ProductsOffer.OfferStatus = true;
+                    mapper.Map<Product, ProductDto>(result);
                     return new BaseResponse<Product>(result);
                 }
                 else
@@ -164,12 +165,16 @@ namespace SinemYoruc_Project.Service
             try
             {
                 var result = hibernateRepositoryProduct.Entities.Where(x => x.ProductsOffer.Id == id).FirstOrDefault();
+                var offer = hibernateRepositoryProductsOffer.Entities.Where(x => x.Id == id).FirstOrDefault();
                 if(result != null)
                 {
                     result.isOfferable = true;
                     result.isSold = false;
                     result.ProductsOffer.OfferStatus = false;
-                    return new BaseResponse<Product>("Offer refused.");
+                    offer.OfferStatus = false;
+                    mapper.Map<Product, ProductDto>(result);
+                    mapper.Map<ProductsOffer, ProductsOfferDto>(offer);
+                    return new BaseResponse<Product>(result);
                 }
                 else
                 {

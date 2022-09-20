@@ -1,7 +1,6 @@
 ﻿using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
-
 namespace SinemYoruc_Project.Data
 {
     public class ProductMap : ClassMapping<Product>
@@ -66,7 +65,7 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(false);
             });
 
-            ManyToOne(product => product.ProductsOffer, map => map.Column("ProductId"));
+            ManyToOne(product => product.ProductsOffer, map => map.Column("OfferId"));
 
             ManyToOne(product => product.Category, map => map.Column("CategoryId"));
 
