@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SinemYoruc-Project.Data\SinemYoruc-Project.Data.csproj" />
     <ProjectReference Include="..\SinemYoruc-Project.Dto\SinemYoruc-Project.Dto.csproj" />
+    <ProjectReference Include="..\SinemYoruc-Project.Hangfire\SinemYoruc-Project.Hangfire.csproj" />
   </ItemGroup>
 
 </Project>

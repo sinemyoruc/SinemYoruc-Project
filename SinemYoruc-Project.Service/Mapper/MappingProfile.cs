@@ -12,6 +12,7 @@ namespace SinemYoruc_Project.Mapper
             CreateMap<CategoryDto, Category>().ReverseMap();
             CreateMap<ProductDto, Product>().ReverseMap();
             CreateMap<ProductsOfferDto, ProductsOffer>().ReverseMap();
+            CreateMap<MailDto, Mail>().ReverseMap();
         }
 
     }

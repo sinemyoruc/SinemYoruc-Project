@@ -36,17 +36,6 @@ namespace SinemYoruc_Project.Service
             {
                 var tempEntity = mapper.Map<AccountDto, Account>(insertResource);
 
-                /* Ayni şifrelerin hashleri aynı olmasın diye tuzlama yapılabilir
-                byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
-                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                password: tempEntity.Password!,
-                                salt: salt,
-                                prf: KeyDerivationPrf.HMACSHA256,
-                                iterationCount: 100000,
-                                numBytesRequested: 256 / 8));
-
-                tempEntity.Password = hashed;
-                */
                 try
                 {
                     //Validation Check
@@ -71,6 +60,11 @@ namespace SinemYoruc_Project.Service
                 hibernateRepository.Commit();
 
                 hibernateRepository.CloseTransaction();
+
+                //Send Email
+                MailExtension mailExtension = new MailExtension();
+                mailExtension.SendWelcomeMail(insertResource.Email);
+
                 return new BaseResponse<AccountDto>(mapper.Map<Account, AccountDto>(tempEntity));
             }
             catch (Exception ex)
@@ -134,7 +128,7 @@ namespace SinemYoruc_Project.Service
             }
         }
 
-        public BaseResponse<Product> AcceptOffer(int id)
+        public BaseResponse<Product> AcceptOffer(int id) //The method accepts an offer with a id
         {
             try
             {
@@ -144,6 +138,11 @@ namespace SinemYoruc_Project.Service
                     result.isOfferable = false;
                     result.isSold = true;
                     result.ProductsOffer.OfferStatus = true;
+
+                    //Send Email
+                    MailExtension mailExtension = new MailExtension();
+                    mailExtension.SendAcceptOfferMail();
+
                     mapper.Map<Product, ProductDto>(result);
                     return new BaseResponse<Product>(result);
                 }
@@ -160,7 +159,7 @@ namespace SinemYoruc_Project.Service
            
         }
 
-        public BaseResponse<Product> RefuseOffer(int id)
+        public BaseResponse<Product> RefuseOffer(int id) //The method refuses an offer with a id
         {
             try
             {
@@ -174,6 +173,11 @@ namespace SinemYoruc_Project.Service
                     offer.OfferStatus = false;
                     mapper.Map<Product, ProductDto>(result);
                     mapper.Map<ProductsOffer, ProductsOfferDto>(offer);
+
+                    //Send Email
+                    MailExtension mailExtension = new MailExtension();
+                    mailExtension.SendRefuseOfferMail();
+                    
                     return new BaseResponse<Product>(result);
                 }
                 else

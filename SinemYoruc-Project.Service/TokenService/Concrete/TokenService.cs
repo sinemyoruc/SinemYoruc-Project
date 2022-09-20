@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NHibernate;
 using Serilog;
@@ -81,6 +79,10 @@ namespace SinemYoruc_Project.Service
                     Email = account.Email,
                     SessionTimeInSecond = jwtConfig.AccessTokenExpiration * 60
                 };
+
+                //Send Email
+                MailExtension mailExtension = new MailExtension();
+                mailExtension.SendLoginMail(tokenRequest.Email);
 
                 return new BaseResponse<TokenResponse>(tokenResponse);
             }

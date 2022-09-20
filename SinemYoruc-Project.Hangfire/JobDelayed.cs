@@ -1,24 +1,23 @@
-﻿using SinemYoruc_Project.Dto;
-using System;
+﻿using SinemYoruc_Project.Data;
+using SinemYoruc_Project.Dto;
 using System.Net.Mail;
 
 namespace SinemYoruc_Project.Hangfire
 {
     public class JobDelayed
     {
-        public static async Task SendEmailAsync(MailDto dto)
+        public static async Task SendEmailAsync(Mail dto)
         {
             MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com", 587);
-            mail.From = new MailAddress("emptymail610@gmail.com", "Gönderen");
+            SmtpClient SmtpServer = new SmtpClient("smtp.ethereal.email", 587);
+            mail.From = new MailAddress("gertrude.daniel25@ethereal.email", "Sender");
             mail.To.Add(dto.ToEmail);
             mail.Subject = dto.Subject;
             mail.Body = dto.Body;
             mail.IsBodyHtml = true;
             SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("emptymail610@gmail.com", "empty-mail-610-S");
-            SmtpServer.EnableSsl = true;
-
+            SmtpServer.Credentials = new System.Net.NetworkCredential("gertrude.daniel25@ethereal.email", "YWZBpZHrGnwh95gcTN");
+            SmtpServer.EnableSsl = false;
             await Task.Run(() =>
             {
                 SmtpServer.SendAsync(mail, null);
