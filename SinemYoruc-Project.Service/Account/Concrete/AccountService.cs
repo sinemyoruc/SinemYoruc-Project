@@ -101,8 +101,7 @@ namespace SinemYoruc_Project.Service
         {
             try
             {
-                var product = hibernateRepositoryProductsOffer.Entities.Where(x => x.OfferAccountId == id)
-                              .Where(y => y.Offer > 0);
+                var product = hibernateRepositoryProductsOffer.Entities.Where(x => x.OfferAccountId == id);
                 return new BaseResponse<IEnumerable<ProductsOffer>>(product);
             }
             catch (Exception ex)
@@ -113,25 +112,25 @@ namespace SinemYoruc_Project.Service
         }
 
 
-        public BaseResponse<IEnumerable<Product>> RecievedOffer(int id) //The method that lists the offers user received
+        public BaseResponse<Product> RecievedOffer(int id) //The method that lists the offers user received
         {
             try
             {
-                var product = hibernateRepositoryProduct.Entities.Where(x => x.isOfferable == true).Where(c => c.Id == id).ToList();
-                var productOffer = product.Where(v => v.ProductsOffer.OfferAccountId == id).Where(y => y.ProductsOffer.Offer > 0).ToList();
+                var product = hibernateRepositoryProduct.Entities.Where(c => c.AccountId == id).FirstOrDefault();
+                var productOffer = hibernateRepositoryProductsOffer.Entities.Where(x => x.ProductId == product.Id).ToList();
                 if(productOffer.Count > 0)
                 {
-                    return new BaseResponse<IEnumerable<Product>>(product);
+                    return new BaseResponse<Product>(product);
                 }
                 else
                 {
-                    return new BaseResponse<IEnumerable<Product>>("You don't have any products that received an offer.");
+                    return new BaseResponse<Product>("You don't have any products that received an offer.");
                 }
             }
             catch (Exception ex)
             {
                 Log.Error("AccountService.RecievedOffer", ex);
-                return new BaseResponse<IEnumerable<Product>>(ex.Message);
+                return new BaseResponse<Product>(ex.Message);
             }
         }
 

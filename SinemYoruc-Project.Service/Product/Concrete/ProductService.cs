@@ -17,7 +17,7 @@ namespace SinemYoruc_Project.Service
         protected readonly IMapper mapper;
         protected readonly IHibernateRepository<Product> hibernateRepositoryProduct;
         protected readonly IHibernateRepository<Category> hibernateRepositoryCategory;
-        protected readonly IHibernateRepository<ProductsOffer> hibernateRepositoryProductDetail;
+        protected readonly IHibernateRepository<ProductsOffer> hibernateRepositoryProductsOffer;
 
 
         public ProductService(ISession session, IMapper mapper) : base (session, mapper)
@@ -27,7 +27,7 @@ namespace SinemYoruc_Project.Service
 
             hibernateRepositoryProduct = new HibernateRepository<Product>(session);
             hibernateRepositoryCategory = new HibernateRepository<Category>(session);
-            hibernateRepositoryProductDetail = new HibernateRepository<ProductsOffer>(session);
+            hibernateRepositoryProductsOffer = new HibernateRepository<ProductsOffer>(session);
         }
 
         public virtual BaseResponse<IEnumerable<ProductDto>> GetAll()
@@ -53,8 +53,6 @@ namespace SinemYoruc_Project.Service
 
                 var category = product.Category;
                 category = insertResource.Category;
-                var productsOffer = product.ProductsOffer;
-                productsOffer = insertResource.ProductsOffer;
                 product.AccountId = insertResource.AccountId;
 
                 hibernateRepositoryProduct.BeginTransaction();
@@ -78,17 +76,22 @@ namespace SinemYoruc_Project.Service
             }
         }
 
-        public BaseResponse<Product> ProductsOffer(ProductsOffer productDetail)
+        public BaseResponse<Product> ProductsOffer(ProductsOffer productsOffer)
         {
-            var product = hibernateRepository.Where(x => x.Id.Equals(productDetail.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
+            var product = hibernateRepository.Where(x => x.Id.Equals(productsOffer.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
             if (product != null) {  
                 if (product.isOfferable == true) {
-                    product.ProductsOffer = productDetail;
+                    product.ProductsOffer = productsOffer;
                     //DB 
-                    hibernateRepositoryProductDetail.BeginTransaction();
-                    hibernateRepositoryProductDetail.Save(productDetail);
-                    hibernateRepositoryProductDetail.Commit();
-                    hibernateRepositoryProductDetail.CloseTransaction();
+                    hibernateRepositoryProductsOffer.BeginTransaction();
+                    hibernateRepositoryProductsOffer.Save(productsOffer);
+                    hibernateRepositoryProductsOffer.Commit();
+                    hibernateRepositoryProductsOffer.CloseTransaction();
+
+                    hibernateRepositoryProduct.BeginTransaction();
+                    hibernateRepositoryProduct.Update(product);
+                    hibernateRepositoryProduct.Commit();
+                    hibernateRepositoryProduct.CloseTransaction();
 
                     return new BaseResponse<Product>(product);
                 }

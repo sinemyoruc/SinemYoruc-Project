@@ -38,7 +38,7 @@ namespace SinemYoruc_Project.Controller
 
 
         [HttpGet("RecievedOffer")]
-        public BaseResponse<IEnumerable<Product>> RecievedOffer(int id) //The method that lists the offers user received
+        public BaseResponse<Product> RecievedOffer(int id) //The method that lists the offers user received
         {
             var response = accountService.RecievedOffer(id);
             return response;

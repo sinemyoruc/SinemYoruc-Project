@@ -23,7 +23,6 @@ namespace SinemYoruc_Project.Dto
         public double Price { get; set; }
 
         public Category Category { get; set; }
-        public ProductsOffer ProductsOffer { get; set; }
 
         public int AccountId { get; set; }
     }
