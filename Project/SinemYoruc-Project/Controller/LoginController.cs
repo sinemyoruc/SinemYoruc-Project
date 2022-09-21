@@ -5,7 +5,7 @@ using SinemYoruc_Project.Service;
 namespace SinemYoruc_Project.Controller
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class LoginController
     {
         private readonly ILoginService loginService;
