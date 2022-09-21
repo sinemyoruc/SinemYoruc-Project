@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace SinemYoruc_Project.Controller
 {
+
+    [ApiController]
+    [Route("api/[controller]")]
     public class AccountDetailController
     {
         private readonly IAccountDetailService accountService;
