@@ -45,7 +45,7 @@ Mail servisini kullanmak için SinemYoruc_Project.Hangfire paketi içindeki JobD
 ![Swagger](Screenshots/account.png)
 ![Swagger](Screenshots/accountdetail-category.png)
 ![Swagger](Screenshots/login-product.png)
-
+ 
 
 # Http Methods Details
 
