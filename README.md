@@ -48,8 +48,7 @@ Mail servisini kullanmak için SinemYoruc_Project.Hangfire paketi içindeki JobD
 
 
 # Http Methods Details
-```html
-<p>
+
 ## Account
 ⭐  <font color="blue"> **GET**</font> **/api/Account**
 
@@ -153,6 +152,3 @@ Idsi verilen productı listeler.
 ⭐ <font color="orange"> **PUT**</font> **api/Product/{id}**
 
 Idsi verilen productı günceller.
-
-</p>
-```
