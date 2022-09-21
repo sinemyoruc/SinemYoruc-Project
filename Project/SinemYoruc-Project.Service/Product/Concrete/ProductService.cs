@@ -140,15 +140,23 @@ namespace SinemYoruc_Project.Service
             }
             else
             {
-                product.isSold = true;
-                product.isOfferable = false;
+                if (product.isSold == false)
+                {
+                    product.isSold = true;
+                    product.isOfferable = false;
 
-                hibernateRepository.BeginTransaction();
-                hibernateRepository.Save(product);
-                hibernateRepository.Commit();
-                hibernateRepository.CloseTransaction();
+                    hibernateRepository.BeginTransaction();
+                    hibernateRepository.Save(product);
+                    hibernateRepository.Commit();
+                    hibernateRepository.CloseTransaction();
 
-                return new BaseResponse<Product>(product);
+                    return new BaseResponse<Product>(product);
+                }
+                else
+                {
+                    return new BaseResponse<Product>("Product is already sold.");
+                }
+               
             }
             
         }

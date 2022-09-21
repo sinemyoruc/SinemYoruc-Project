@@ -14,7 +14,7 @@ Kullanılacak modeller ve mapping işlemleri yönetilmektedir.
 Mapping için gerekli sınıflar yönetilmektedir.
 
 ### ✨ SinemYoruc-Project.Hangfire Katmanı
-Mail gönderme servisi için Hangfire paketi eklenmiştir ve JobDelayed sınıfı yönetilmektedir. Mailler kuyruğa alınıp asenkron şekilde gönderilmektedir.
+Mail gönderme servisi için Hangfire paketi eklenmiştir ve JobDelayed sınıfı yönetilmektedir. Mailler kuyruğa alınıp asenkron şekilde ve maksimum 2 saniyede gönderilmektedir. Bir job maksimum 5 kez çalışmaktadır. Eğer başarılı olamadıysa Fail statusune çekilmektedir.
 
 ### ✨ SinemYoruc-Project.NUnitTest Katmanı
 Test sınıfları yönetilmektedir.
@@ -56,7 +56,7 @@ Tüm kayıtlı accountları listeler.
 
 ⭐  <font color="green"> **POST**</font> **/api/Account**
 
-Yeni account ekler. Email ve şifre validasyonları vardır. Şifre databasede MD5 ile şifrelenmiş şekilde saklanır.
+Yeni account ekler. Email ve şifre validasyonları vardır. Şifre databasede MD5 ile şifrelenmiş şekilde saklanır. Hesap oluşturulduktan sonra kullanıcıya hoşgeldiniz maili gönderir.
 
 ⭐ <font color="red"> **DELETE**</font> **/api/Account**
 
@@ -87,11 +87,11 @@ Account id alır ve o accountun ürünlerine gelen offerları listeler.
 
 ⭐ <font color="green"> **POST**</font> **/api/AccountDetail/CreateAcceptOffer**
 
-Idsi verilen offerı kabul eder. Producttaki offerStatus true, isOfferable false, isSold true yapar.
+Idsi verilen offerı kabul eder. Producttaki offerStatus true ve isOfferable false yapar. Teklifin kabul edildiğine dair kullanıcıya mail gönderir. Price alanı offerdaki fiyata göre güncellenir. Kullanıcı ***GET /api/Product/SoldProduct*** apisi ile productı satın alabilir. 
 
 ⭐ <font color="green"> **POST**</font> **/api/AccountDetail/CreateRefuseOffer**
 
-Idsi verilen offerı reddeder. Producttaki offerStatus false, isOfferable true, isSoldu false yapar.
+Idsi verilen offerı reddeder. Producttaki offerStatus false ve isOfferable true yapar. Teklifin reddedildiğine dair kullanıcıya mail gönderir.
 
 
 ## Category
@@ -120,18 +120,18 @@ Idsi verilen kategoriyi günceller.
 
 ⭐ <font color="green"> **POST**</font> **/api/Login**
 
-Kayıtlı olan email ve şifre ile giriş yapar, token üretir.
+Kayıtlı olan email ve şifre ile giriş yapar, token üretir. Kullanıcıya giriş yapıldı maili gönderir.
 
 
 ## Product
 
 ⭐ <font color="green"> **POST**</font> **/api/Product/ProductOffer**
 
-Product idye göre offer verir.
+Product idye göre isOfferable true, isSold alanı false ise offer verir.
 
 ⭐  <font color="blue"> **GET**</font> **/api/Product/SoldProduct**
 
-Idsi verilen ürünün offerStatus true ise satın almayı sağlar. isSold alanını true yapar.
+Idsi verilen ürünün isSold alanı false ise satın almayı sağlar. isSold alanını true yapar.
 
 ⭐ <font color="blue"> **GET**</font> **/api/Product**
 
@@ -139,7 +139,7 @@ Kayıtlı tüm productları listeler.
 
 ⭐ <font color="green"> **POST**</font> **/api/Product**
 
-Bilgileri girilen ürünü veritabanına ekler.
+Bilgileri girilen ürünü veritabanına ekler. Validasyonları mevcut.
 
 ⭐ <font color="red"> **DELETE**</font> **/api/Product**
 
@@ -152,3 +152,5 @@ Idsi verilen productı listeler.
 ⭐ <font color="orange"> **PUT**</font> **api/Product/{id}**
 
 Idsi verilen productı günceller.
+
+

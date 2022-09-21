@@ -51,6 +51,13 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(true);
             });
 
+            Property(b => b.Brand, x =>
+            {
+                x.Length(50);
+                x.Type(NHibernateUtil.String);
+                x.NotNullable(true);
+            });
+
             Property(b => b.Price, x =>
             {
                 x.Length(50);

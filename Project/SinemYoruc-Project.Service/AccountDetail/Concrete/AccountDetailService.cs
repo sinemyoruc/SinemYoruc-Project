@@ -89,6 +89,7 @@ namespace SinemYoruc_Project
                         result.isOfferable = false;
                         result.ProductsOffer.OfferStatus = true;
                         offer.OfferStatus = true;
+                        result.Price = offer.Offer;
 
                         hibernateRepositoryProductsOffer.BeginTransaction();
                         hibernateRepositoryProductsOffer.Update(offer);
