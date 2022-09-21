@@ -15,7 +15,6 @@ namespace SinemYoruc_Project.Controller
         private readonly ICategoryService categoryService;
         private readonly IMapper mapper;
 
-
         public CategoryController(ICategoryService categoryService, IMapper mapper) : base(categoryService, mapper)
         {
             this.mapper = mapper;

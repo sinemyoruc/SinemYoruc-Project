@@ -1,5 +1,4 @@
 ﻿using SinemYoruc_Project.Data;
-using SinemYoruc_Project.Dto;
 using System.Net.Mail;
 
 namespace SinemYoruc_Project.Hangfire
