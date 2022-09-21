@@ -50,105 +50,105 @@ Mail servisini kullanmak için SinemYoruc_Project.Hangfire paketi içindeki JobD
 # Http Methods Details
 
 ## Account
-⭐ GET /api/Account
+⭐  <font color="blue"> **GET**</font> **/api/Account**
 
 Tüm kayıtlı accountları listeler.
 
-⭐ POST /api/Account
+⭐  <font color="green"> **POST**</font> **/api/Account**
 
 Yeni account ekler. Email ve şifre validasyonları vardır. Şifre databasede MD5 ile şifrelenmiş şekilde saklanır.
 
-⭐ DELETE /api/Account
+⭐ <font color="red"> **DELETE**</font> **/api/Account**
 
 Idsi verilen accountu siler.
 
-⭐ GET /api/Account/{id}
+⭐  <font color="blue"> **GET**</font> **/api/Account/{id}**
 
 Idsi verilen accountu listeler.
 
-⭐ PUT /api/Account/{id}
+⭐ <font color="orange"> **PUT**</font> **/api/Account/{id}**
 
 Idsi verilen accountu günceller.
 
 
 ## AccountDetail
 
-⭐ GET /api/AccountDetail/GetProduct
+⭐  <font color="blue"> **GET**</font> **/api/AccountDetail/GetProduct**
 
 Account id alır ve o accountun productlarını listeler.
 
-⭐ GET /api/AccountDetail/GetOfferProduct
+⭐  <font color="blue"> **GET**</font> **/api/AccountDetail/GetOfferProduct**
 
 Account id alır ve o accountun yaptığı offerları listeler.
 
-⭐ GET /api/AccountDetail/GetRecievedOffer
+⭐  <font color="blue"> **GET**</font> **/api/AccountDetail/GetRecievedOffer**
 
 Account id alır ve o accountun ürünlerine gelen offerları listeler.
 
-⭐ POST /api/AccountDetail/CreateAcceptOffer
+⭐ <font color="green"> **POST**</font> **/api/AccountDetail/CreateAcceptOffer**
 
 Idsi verilen offerı kabul eder. Producttaki offerStatus true, isOfferable false, isSold true yapar.
 
-⭐ POST /api/AccountDetail/CreateRefuseOffer
+⭐ <font color="green"> **POST**</font> **/api/AccountDetail/CreateRefuseOffer**
 
 Idsi verilen offerı reddeder. Producttaki offerStatus false, isOfferable true, isSoldu false yapar.
 
 
 ## Category
-⭐ GET /api/Category
+⭐  <font color="blue"> **GET**</font> **/api/Category**
 
 Kayıtlı olan kategorilerin tümünü listeler.
 
-⭐ POST /api/Category
+⭐ <font color="green"> **POST**</font> **/api/Category**
 
 Kategori ekler.
 
-⭐ DELETE /api/Category
+⭐ <font color="red"> **DELETE**</font> **/api/Category**
 
 Idsi verilen kategoriyi siler.
 
-⭐ GET /api/Category/{id}
+⭐  <font color="blue"> **GET**</font> **/api/Category/{id}**
 
 Idsi verilen kategoriyi listeler.
 
-⭐ PUT /api/Category/{id}
+⭐ <font color="orange"> **PUT**</font> **/api/Category/{id}**
 
 Idsi verilen kategoriyi günceller.
 
 
 ## Login
 
-⭐ POST /api/Login
+⭐ <font color="green"> **POST**</font> **/api/Login**
 
 Kayıtlı olan email ve şifre ile giriş yapar, token üretir.
 
 
 ## Product
 
-⭐ POST /api/Product/ProductOffer
+⭐ <font color="green"> **POST**</font> **/api/Product/ProductOffer**
 
 Product idye göre offer verir.
 
-⭐ GET /api/Product/SoldProduct
+⭐  <font color="blue"> **GET**</font> **/api/Product/SoldProduct**
 
 Idsi verilen ürünün offerStatus true ise satın almayı sağlar. isSold alanını true yapar.
 
-⭐ GET /api/Product
+⭐ <font color="blue"> **GET**</font> **/api/Product**
 
 Kayıtlı tüm productları listeler.
 
-⭐ POST /api/Product
+⭐ <font color="green"> **POST**</font> **/api/Product**
 
 Bilgileri girilen ürünü veritabanına ekler.
 
-⭐ DELETE /api/Product
+⭐ <font color="red"> **DELETE**</font> **/api/Product**
 
 Idsi verilen productı siler.
 
-⭐ GET /api/Product/{id}
+⭐ <font color="blue"> **GET**</font> **/api/Product/{id}**
 
 Idsi verilen productı listeler.
 
-⭐ PUT /api/Product/{id}
+⭐ <font color="orange"> **PUT**</font> **api/Product/{id}**
 
 Idsi verilen productı günceller.
