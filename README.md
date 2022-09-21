@@ -14,7 +14,7 @@ Kullanılacak modeller ve mapping işlemleri yönetilmektedir.
 Mapping için gerekli sınıflar yönetilmektedir.
 
 ### ✨ SinemYoruc-Project.Hangfire Katmanı
-Mail gönderme servisi için Hangfire eklenmiş ve JobDelayed sınıfı yönetilmektedir. Mailler kuyruğa alınıp asenkron şekilde gönderilmektedir.
+Mail gönderme servisi için Hangfire paketi eklenmiştir ve JobDelayed sınıfı yönetilmektedir. Mailler kuyruğa alınıp asenkron şekilde gönderilmektedir.
 
 ### ✨ SinemYoruc-Project.NUnitTest Katmanı
 Test sınıfları yönetilmektedir.
