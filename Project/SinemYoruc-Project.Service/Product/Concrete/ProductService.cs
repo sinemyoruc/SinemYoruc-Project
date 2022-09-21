@@ -51,6 +51,7 @@ namespace SinemYoruc_Project.Service
             {
                 var category = hibernateRepositoryCategory.Entities.Where(x => x.Id == insertResource.Category.Id).FirstOrDefault();
                 var product = mapper.Map<ProductDto, Product>(insertResource);
+                
                 if (category is null)
                 {
                     Log.Error("ProductService.Insert");
@@ -80,7 +81,7 @@ namespace SinemYoruc_Project.Service
         {
             var product = hibernateRepositoryProduct.Where(x => x.Id.Equals(productsOffer.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
             if (product != null) {  
-                if (product.isOfferable == true) {
+                if (product.isOfferable == true & product.isSold == false) {
                     product.ProductsOffer = productsOffer;
                     //DB 
                     hibernateRepositoryProductsOffer.BeginTransaction();
@@ -110,7 +111,7 @@ namespace SinemYoruc_Project.Service
         {
             //isSold and isOfferable fields are updated when the product is sold
 
-            var product = hibernateRepository.Where(x => x.Id == id).Where(x => x.ProductsOffer.OfferStatus == true).FirstOrDefault(); //Retrieving the product with the desired id
+            var product = hibernateRepository.Where(x => x.Id == id).FirstOrDefault(); //Retrieving the product with the desired id
             if(product is null)
             {
                 return new BaseResponse<Product>("Product is not found");
@@ -118,6 +119,7 @@ namespace SinemYoruc_Project.Service
             else
             {
                 product.isSold = true;
+                product.isOfferable = false;
 
                 hibernateRepository.BeginTransaction();
                 hibernateRepository.Save(product);

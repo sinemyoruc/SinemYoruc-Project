@@ -81,21 +81,35 @@ namespace SinemYoruc_Project
             try
             {
                 var result = hibernateRepositoryProduct.Entities.Where(x => x.ProductsOffer.Id == id).FirstOrDefault();
+                var offer = hibernateRepositoryProductsOffer.Entities.Where(x => x.Id == id).FirstOrDefault();
                 if (result != null)
                 {
-                    result.isOfferable = false;
-                    result.ProductsOffer.OfferStatus = true;
+                    if(result.isSold == false)
+                    {
+                        result.isOfferable = false;
+                        result.ProductsOffer.OfferStatus = true;
+                        offer.OfferStatus = true;
 
-                    //Send Email
-                    MailExtension mailExtension = new MailExtension();
-                    mailExtension.SendAcceptOfferMail();
+                        hibernateRepositoryProductsOffer.BeginTransaction();
+                        hibernateRepositoryProductsOffer.Update(offer);
+                        hibernateRepositoryProductsOffer.Commit();
+                        hibernateRepositoryProductsOffer.CloseTransaction();
 
+                        //Send Email
+                        MailExtension mailExtension = new MailExtension();
+                        mailExtension.SendAcceptOfferMail();
+
+                        return new BaseResponse<Product>(result);
+                    }
+                    else
+                    {
+                        return new BaseResponse<Product>("Product is already sold.");
+                    }
                     
-                    return new BaseResponse<Product>(result);
                 }
                 else
                 {
-                    return new BaseResponse<Product>("Offer is not found");
+                    return new BaseResponse<Product>("Offer is not found.");
                 }
             }
             catch (Exception ex)
@@ -114,16 +128,27 @@ namespace SinemYoruc_Project
                 var offer = hibernateRepositoryProductsOffer.Entities.Where(x => x.Id == id).FirstOrDefault();
                 if (result != null)
                 {
-                    result.isOfferable = true;
-                    result.ProductsOffer.OfferStatus = false;
-                    offer.OfferStatus = false;
-                    mapper.Map<ProductsOffer, ProductsOfferDto>(offer);
+                    if (result.isSold == false)
+                    {
+                        result.isOfferable = true;
+                        result.ProductsOffer.OfferStatus = false;
+                        offer.OfferStatus = false;
 
-                    //Send Email
-                    MailExtension mailExtension = new MailExtension();
-                    mailExtension.SendRefuseOfferMail();
+                        hibernateRepositoryProductsOffer.BeginTransaction();
+                        hibernateRepositoryProductsOffer.Update(offer);
+                        hibernateRepositoryProductsOffer.Commit();
+                        hibernateRepositoryProductsOffer.CloseTransaction();
 
-                    return new BaseResponse<Product>(result);
+                        //Send Email
+                        MailExtension mailExtension = new MailExtension();
+                        mailExtension.SendRefuseOfferMail();
+
+                        return new BaseResponse<Product>(result);
+                    }
+                    else
+                    {
+                        return new BaseResponse<Product>("Product is already sold.");
+                    }
                 }
                 else
                 {
