@@ -6,7 +6,7 @@ namespace SinemYoruc_Project.Service
 {
     public interface IProductService : IBaseService<ProductDto, Product>
     {
-        public BaseResponse<Product> ProductsOffer(ProductsOffer productDetail);
+        public BaseResponse<Product> ProductsOffer(ProductsOfferDto productDetail);
         public BaseResponse<Product> SoldProducts(int id);
     }
 }

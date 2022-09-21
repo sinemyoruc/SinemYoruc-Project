@@ -77,34 +77,56 @@ namespace SinemYoruc_Project.Service
             }
         }
 
-        public BaseResponse<Product> ProductsOffer(ProductsOffer productsOffer)
+        public BaseResponse<Product> ProductsOffer(ProductsOfferDto productsOfferDto)
         {
-            var product = hibernateRepositoryProduct.Where(x => x.Id.Equals(productsOffer.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
-            if (product != null) {  
-                if (product.isOfferable == true & product.isSold == false) {
-                    product.ProductsOffer = productsOffer;
-                    //DB 
-                    hibernateRepositoryProductsOffer.BeginTransaction();
-                    hibernateRepositoryProductsOffer.Save(productsOffer);
-                    hibernateRepositoryProductsOffer.Commit();
-                    hibernateRepositoryProductsOffer.CloseTransaction();
+            try
+            {
+                var product = hibernateRepositoryProduct.Where(x => x.Id.Equals(productsOfferDto.ProductId)).FirstOrDefault(); //Retrieving the product with the desired id
+                var productOffer = mapper.Map<ProductsOfferDto, ProductsOffer>(productsOfferDto);
 
-                    hibernateRepositoryProduct.BeginTransaction();
-                    hibernateRepositoryProduct.Update(product);
-                    hibernateRepositoryProduct.Commit();
-                    hibernateRepositoryProduct.CloseTransaction();
 
-                    return new BaseResponse<Product>(product);
+                var tempEntity = mapper.Map<Product, ProductDto>(product);
+
+                if (tempEntity != null)
+                {
+
+                    if (tempEntity.isOfferable == true & tempEntity.isSold == false)
+                    {
+
+                        //DB 
+                        hibernateRepositoryProductsOffer.BeginTransaction();
+                        hibernateRepositoryProductsOffer.Save(productOffer);
+                        hibernateRepositoryProductsOffer.Commit();
+                        hibernateRepositoryProductsOffer.CloseTransaction();
+
+                        product.ProductsOffer = productOffer;
+
+                        hibernateRepositoryProduct.BeginTransaction();
+                        hibernateRepositoryProduct.Update(product);
+                        hibernateRepositoryProduct.Commit();
+                        hibernateRepositoryProduct.CloseTransaction();
+
+                        return new BaseResponse<Product>(product);
+                    }
+                    else
+                    {
+                        return new BaseResponse<Product>("No offers can be made for this product.");
+                    }
                 }
                 else
                 {
-                    return new BaseResponse<Product>("No offers can be made for this product.");
+                    return new BaseResponse<Product>("Product is not found");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return new BaseResponse<Product>("Product is not found");
+
+                Log.Error("ProductService.ProductsOffer", ex);
+                hibernateRepositoryProduct.Rollback();
+                hibernateRepositoryProduct.CloseTransaction();
+                return new BaseResponse<Product>(ex.Message);
             }
+           
         }
 
         public BaseResponse<Product> SoldProducts(int id)

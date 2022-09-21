@@ -25,7 +25,7 @@ namespace SinemYoruc_Project.Controller
 
 
         [HttpPost("ProductsOffer")]
-        public BaseResponse<Product> ProductsOffer([FromBody] ProductsOffer request)
+        public BaseResponse<Product> ProductsOffer([FromBody] ProductsOfferDto request)
         {
             var response = productService.ProductsOffer(request);
             return response;

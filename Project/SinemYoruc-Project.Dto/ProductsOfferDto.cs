@@ -4,8 +4,6 @@ namespace SinemYoruc_Project
 {
     public class ProductsOfferDto
     {
-        [Required]
-        public bool isOfferable { get; set; }
 
         [Required]
         public double Offer { get; set; }
@@ -13,7 +11,5 @@ namespace SinemYoruc_Project
         [Required]
         public int ProductId { get; set; }
         public int OfferAccountId { get; set; }
-        public bool OfferStatus { get; set; }
-
     }
 }
