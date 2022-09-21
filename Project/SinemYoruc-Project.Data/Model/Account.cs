@@ -9,7 +9,6 @@ namespace SinemYoruc_Project.Data
         public virtual string LastName { get; set; }
         public virtual string Email { get; set; }
         public virtual string Password { get; set; }
-        public virtual string Role { get; set; }
         public virtual DateTime LastActivity { get; set; }
     }
 }

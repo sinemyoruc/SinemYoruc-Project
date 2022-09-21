@@ -45,12 +45,6 @@ namespace SinemYoruc_Project.Data
                 x.NotNullable(true);
             });
 
-            Property(b => b.Role, x =>
-            {
-                x.Length(50);
-                x.Type(NHibernateUtil.String);
-                x.NotNullable(true);
-            });
 
             Property(b => b.LastActivity, x =>
             {

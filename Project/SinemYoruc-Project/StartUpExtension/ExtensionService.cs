@@ -11,8 +11,9 @@ namespace SinemYoruc_Project.StartUpExtension
         {
             // services 
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountDetailService, AccountDetailService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IProductService, ProductService>();
 
 

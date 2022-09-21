@@ -6,23 +6,20 @@ namespace SinemYoruc_Project.Controller
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TokenController : ControllerBase
+    public class LoginController
     {
-        private readonly ITokenService tokenService;
+        private readonly ILoginService loginService;
 
-        public TokenController(ITokenService tokenService)
+        public LoginController(ILoginService loginService)
         {
-            this.tokenService = tokenService;
+            this.loginService = loginService;
         }
-
 
         [HttpPost("Login")]
         public BaseResponse<TokenResponse> Login([FromBody] TokenRequest request)
         {
-            var response = tokenService.GenerateToken(request);
+            var response = loginService.GenerateToken(request);
             return response;
         }
-
-
     }
 }

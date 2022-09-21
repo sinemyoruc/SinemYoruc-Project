@@ -25,10 +25,6 @@ namespace SinemYoruc_Project.Dto
         public string Password { get; set; }
         
 
-        [RoleAttribute]
-        public string Role { get; set; }
-
-
         [Display(Name = "Last Activity")]
         public DateTime LastActivity { get; set; }
     }

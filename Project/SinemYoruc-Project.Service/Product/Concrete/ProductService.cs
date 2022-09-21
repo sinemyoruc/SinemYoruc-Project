@@ -49,18 +49,23 @@ namespace SinemYoruc_Project.Service
         {
             try
             {
+                var category = hibernateRepositoryCategory.Entities.Where(x => x.Id == insertResource.Category.Id).FirstOrDefault();
                 var product = mapper.Map<ProductDto, Product>(insertResource);
+                if (category is null)
+                {
+                    Log.Error("ProductService.Insert");
+                    return new BaseResponse<ProductDto>("Please enter valid Category Id");
+                }
+                else
+                {
+                    hibernateRepositoryProduct.BeginTransaction();
+                    hibernateRepositoryProduct.Save(product);
+                    hibernateRepositoryProduct.Commit();
+                    hibernateRepositoryProduct.CloseTransaction();
 
-                var category = product.Category;
-                category = insertResource.Category;
-                product.AccountId = insertResource.AccountId;
-
-                hibernateRepositoryProduct.BeginTransaction();
-                hibernateRepositoryProduct.Save(product);
-                hibernateRepositoryProduct.Commit();
-                hibernateRepositoryProduct.CloseTransaction();
-
-                return new BaseResponse<ProductDto>(mapper.Map<Product, ProductDto>(product));
+                    return new BaseResponse<ProductDto>(mapper.Map<Product, ProductDto>(product));
+                }
+              
             }
             catch (Exception ex)
             {
@@ -105,16 +110,23 @@ namespace SinemYoruc_Project.Service
         {
             //isSold and isOfferable fields are updated when the product is sold
 
-            var product = hibernateRepository.Where(x => x.Id == id).FirstOrDefault(); //Retrieving the product with the desired id
-            product.isSold = true;
-            product.isOfferable = false;
+            var product = hibernateRepository.Where(x => x.Id == id).Where(x => x.ProductsOffer.OfferStatus == true).FirstOrDefault(); //Retrieving the product with the desired id
+            if(product is null)
+            {
+                return new BaseResponse<Product>("Product is not found");
+            }
+            else
+            {
+                product.isSold = true;
 
-            hibernateRepository.BeginTransaction();
-            hibernateRepository.Save(product);
-            hibernateRepository.Commit();
-            hibernateRepository.CloseTransaction();
+                hibernateRepository.BeginTransaction();
+                hibernateRepository.Save(product);
+                hibernateRepository.Commit();
+                hibernateRepository.CloseTransaction();
 
-            return new BaseResponse<Product>(product);
+                return new BaseResponse<Product>(product);
+            }
+            
         }
 
      }

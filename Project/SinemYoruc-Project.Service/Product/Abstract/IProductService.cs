@@ -1,7 +1,6 @@
 ﻿using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
 using SinemYoruc_Project.Dto;
-using System.Collections.Generic;
 
 namespace SinemYoruc_Project.Service
 {

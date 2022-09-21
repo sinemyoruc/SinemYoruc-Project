@@ -30,8 +30,16 @@ namespace SinemYoruc_Project.Service
             try
             {
                 var tempEntity = hibernateRepository.Entities.ToList();
-                var result = mapper.Map<IEnumerable<Entity>, IEnumerable<Dto>>(tempEntity);
-                return new BaseResponse<IEnumerable<Dto>>(result);
+                if(tempEntity.Count <= 0) 
+                {
+                    return new BaseResponse<IEnumerable<Dto>>("Record Not Found");
+                }
+                else
+                {
+                    var result = mapper.Map<IEnumerable<Entity>, IEnumerable<Dto>>(tempEntity);
+                    return new BaseResponse<IEnumerable<Dto>>(result);
+                }
+               
             }
             catch (Exception ex)
             {
@@ -45,8 +53,16 @@ namespace SinemYoruc_Project.Service
             try
             {
                 var tempEntity = hibernateRepository.GetById(id);
-                var result = mapper.Map<Entity, Dto>(tempEntity);
-                return new BaseResponse<Dto>(result);
+                if(tempEntity is null)
+                {
+                    return new BaseResponse<Dto>("Record Not Found");
+                }
+                else
+                {
+                    var result = mapper.Map<Entity, Dto>(tempEntity);
+                    return new BaseResponse<Dto>(result);
+                }
+                
             }
             catch (Exception ex)
             {

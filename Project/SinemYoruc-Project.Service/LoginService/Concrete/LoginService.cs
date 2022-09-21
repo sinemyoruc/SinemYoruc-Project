@@ -12,14 +12,14 @@ using System.Text;
 
 namespace SinemYoruc_Project.Service
 {
-    public class TokenService : ITokenService
+    public class LoginService : ILoginService
     {
 
         protected readonly ISession session;
         protected readonly IHibernateRepository<Account> hibernateRepository;
         private readonly JwtConfig jwtConfig;
 
-        public TokenService(ISession session,  IOptionsMonitor<JwtConfig> jwtConfig)
+        public LoginService(ISession session,  IOptionsMonitor<JwtConfig> jwtConfig)
         {
             this.session = session;
             this.jwtConfig = jwtConfig.CurrentValue;
