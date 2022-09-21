@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
 using SinemYoruc_Project.Dto;
 using SinemYoruc_Project.Service;
-using System;
 
 namespace SinemYoruc_Project.Controller
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProductController : BaseController<ProductDto, Product>
     {
         private readonly IProductService productService;

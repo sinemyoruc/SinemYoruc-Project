@@ -29,8 +29,17 @@ namespace SinemYoruc_Project
         {
             try
             {
-                var product = hibernateRepositoryProduct.Entities.Where(x => x.AccountId == id);
-                return new BaseResponse<IEnumerable<Product>>(product);
+                var product = hibernateRepositoryProduct.Entities.Where(x => x.AccountId == id).ToList();
+                if(product.Count == 0)
+                {
+                    Log.Error("AccountService.GetProduct", "Product is not found");
+                    return new BaseResponse<IEnumerable<Product>>("Product is not found");
+                }
+                else
+                {
+                    return new BaseResponse<IEnumerable<Product>>(product);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -43,8 +52,17 @@ namespace SinemYoruc_Project
         {
             try
             {
-                var product = hibernateRepositoryProductsOffer.Entities.Where(x => x.OfferAccountId == id);
-                return new BaseResponse<IEnumerable<ProductsOffer>>(product);
+                var product = hibernateRepositoryProductsOffer.Entities.Where(x => x.OfferAccountId == id).ToList();
+                if(product.Count == 0)
+                {
+                    Log.Error("AccountService.GetProduct", "Product is not found");
+                    return new BaseResponse<IEnumerable<ProductsOffer>>("Product is not found");
+                }
+                else
+                {
+                    return new BaseResponse<IEnumerable<ProductsOffer>>(product);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -54,25 +72,24 @@ namespace SinemYoruc_Project
         }
 
 
-        public BaseResponse<Product> GetRecievedOffer(int id) //The method that lists the offers user received
+        public BaseResponse<IEnumerable<Product>> GetRecievedOffer(int id) //The method that lists the offers user received
         {
             try
             {
-                var product = hibernateRepositoryProduct.Entities.Where(c => c.AccountId == id).FirstOrDefault();
-                var productOffer = hibernateRepositoryProductsOffer.Entities.Where(x => x.ProductId == product.Id).ToList();
-                if (productOffer.Count > 0)
+                var product = hibernateRepositoryProduct.Entities.Where(c => c.AccountId == id).Where(x => x.ProductsOffer != null).ToList();
+                if (product.Count != 0)
                 {
-                    return new BaseResponse<Product>(product);
+                    return new BaseResponse<IEnumerable<Product>>(product);
                 }
                 else
                 {
-                    return new BaseResponse<Product>("You don't have any products that received an offer.");
+                    return new BaseResponse<IEnumerable<Product>>("You don't have any products that received an offer.");
                 }
             }
             catch (Exception ex)
             {
                 Log.Error("AccountService.RecievedOffer", ex);
-                return new BaseResponse<Product>(ex.Message);
+                return new BaseResponse<IEnumerable<Product>>(ex.Message);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
@@ -10,6 +11,7 @@ namespace SinemYoruc_Project.Controller
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AccountDetailController
     {
         private readonly IAccountDetailService accountService;
@@ -37,7 +39,7 @@ namespace SinemYoruc_Project.Controller
 
 
         [HttpGet("GetRecievedOffer")]
-        public BaseResponse<Product> GetRecievedOffer(int id) //The method that lists the offers user received
+        public BaseResponse<IEnumerable<Product>> GetRecievedOffer(int id) //The method that lists the offers user received
         {
             var response = accountService.GetRecievedOffer(id);
             return response;
