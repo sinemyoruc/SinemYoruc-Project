@@ -7,6 +7,7 @@ using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
 using SinemYoruc_Project.Dto;
 using System;
+using System.Linq;
 
 namespace SinemYoruc_Project.Service
 {
@@ -29,8 +30,8 @@ namespace SinemYoruc_Project.Service
             try
             {
                 var tempEntity = mapper.Map<AccountDto, Account>(insertResource);
-                var email = hibernateRepository.Where(x => x.Email == insertResource.Email);
-                if (email == null)
+                var email = hibernateRepository.Entities.Where(x => x.Email == insertResource.Email).ToList();
+                if (email.Count == 0)
                 {
                     try
                     {
