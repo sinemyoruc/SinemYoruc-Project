@@ -3,10 +3,8 @@ using NHibernate;
 using Serilog;
 using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
-using SinemYoruc_Project.Extensions;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
 namespace SinemYoruc_Project
