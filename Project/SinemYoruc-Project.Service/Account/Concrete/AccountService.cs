@@ -29,38 +29,47 @@ namespace SinemYoruc_Project.Service
             try
             {
                 var tempEntity = mapper.Map<AccountDto, Account>(insertResource);
-
-                try
+                var email = hibernateRepository.Where(x => x.Email == insertResource.Email);
+                if (email == null)
                 {
-                    //Validation Check
-                    AccountValidator validations = new AccountValidator();
-                    ValidationResult result = validations.Validate(tempEntity);
-                    validations.ValidateAndThrow(tempEntity);
+                    try
+                    {
+                        //Validation Check
+                        AccountValidator validations = new AccountValidator();
+                        ValidationResult result = validations.Validate(tempEntity);
+                        validations.ValidateAndThrow(tempEntity);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("AccountService.Insert", ex);
+                        return new BaseResponse<AccountDto>(ex.Message);
+                    }
+
+
+                    //MD5 HASH FOR PASSWORD
+                    PasswordExtension extension = new PasswordExtension();
+                    var encodedPassword = extension.GetMd5Hash(tempEntity.Password);
+                    tempEntity.Password = encodedPassword;
+
+                    hibernateRepository.BeginTransaction();
+                    hibernateRepository.Save(tempEntity);
+                    hibernateRepository.Commit();
+
+                    hibernateRepository.CloseTransaction();
+
+                    //Send Email
+                    MailExtension mailExtension = new MailExtension();
+                    mailExtension.SendWelcomeMail(insertResource.Email);
+
+                    return new BaseResponse<AccountDto>(mapper.Map<Account, AccountDto>(tempEntity));
                 }
-                catch (Exception ex)
+                else
                 {
-                    Log.Error("AccountService.Insert", ex);
-                    return new BaseResponse<AccountDto>(ex.Message);
+                    Log.Error("AccountService.Insert", "Email is already exist.");
+                    return new BaseResponse<AccountDto>("Email is already exist.");
                 }
-
-
-                //MD5 HASH FOR PASSWORD
-                PasswordExtension extension = new PasswordExtension();
-                var encodedPassword = extension.GetMd5Hash(tempEntity.Password);
-                tempEntity.Password = encodedPassword;
-
-                hibernateRepository.BeginTransaction();
-                hibernateRepository.Save(tempEntity);
-                hibernateRepository.Commit();
-
-                hibernateRepository.CloseTransaction();
-
-                //Send Email
-                MailExtension mailExtension = new MailExtension();
-                mailExtension.SendWelcomeMail(insertResource.Email);
-
-                return new BaseResponse<AccountDto>(mapper.Map<Account, AccountDto>(tempEntity));
             }
+                
             catch (Exception ex)
             {
                 Log.Error("AccountService.Insert", ex);

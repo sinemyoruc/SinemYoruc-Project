@@ -20,10 +20,10 @@ Mail gönderme servisi için Hangfire paketi eklenmiştir ve JobDelayed sınıf�
 Test sınıfları yönetilmektedir.
 
 ### ✨ SinemYoruc-Project.Service Katmanı
-İşleyiş için gerekli olan fonksiyonları yönetmektedir.
+İşleyiş için gerekli olan fonksiyonlar yönetilmektedir.
 
 # Installation
-Öncelikle projeyi clonelayın.
+Öncelikle projeyi clonelayınız.
 
 ```
 git clone https://github.com/sinemyoruc/SinemYoruc-Project.git
@@ -36,6 +36,8 @@ Daha sonra appsettings.json dosyasındaki ConnectionStrings alanını kendi data
 
 
 Mail servisini kullanmak için SinemYoruc_Project.Hangfire paketi içindeki JobDelayed.cs dosyasından ilgili alanları kendi mail bilgilerinize göre güncelleyiniz.
+
+Account ve Login apileri dışında diğer apileri kullanabilmek için authorization ayarlanmıştır. Önce hesap oluşturup login olarak token alabilirsiniz.
 
 
 
