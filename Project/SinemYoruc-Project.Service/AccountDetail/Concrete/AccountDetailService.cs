@@ -3,8 +3,10 @@ using NHibernate;
 using Serilog;
 using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Data;
+using SinemYoruc_Project.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
 namespace SinemYoruc_Project
@@ -15,7 +17,7 @@ namespace SinemYoruc_Project
         protected readonly IMapper mapper;
         protected readonly IHibernateRepository<Product> hibernateRepositoryProduct;
         protected readonly IHibernateRepository<ProductsOffer> hibernateRepositoryProductsOffer;
-
+        
         public AccountDetailService(ISession session, IMapper mapper)
         {
             this.session = session;

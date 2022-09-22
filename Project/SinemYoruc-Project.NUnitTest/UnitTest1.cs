@@ -1,3 +1,4 @@
+using SinemYoruc_Project.Base;
 using SinemYoruc_Project.Dto;
 using SinemYoruc_Project.Service;
 
@@ -18,8 +19,7 @@ namespace SinemYoruc_Project.NUnitTest
         {
             //Arrange
             CategoryDto category = new CategoryDto();
-            category.CategoryName = "CategoryTest";
-            var response = category;
+            BaseResponse<IEnumerable<CategoryDto>> response = null;
 
             //Act
             var result = categoryService.GetAll();
