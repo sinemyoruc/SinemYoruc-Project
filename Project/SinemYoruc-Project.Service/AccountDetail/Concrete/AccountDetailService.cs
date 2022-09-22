@@ -32,7 +32,7 @@ namespace SinemYoruc_Project
                 var product = hibernateRepositoryProduct.Entities.Where(x => x.AccountId == id).ToList();
                 if(product.Count == 0)
                 {
-                    Log.Error("AccountService.GetProduct", "Product is not found");
+                    Log.Error("AccountService.GetProduct: Product is not found");
                     return new BaseResponse<IEnumerable<Product>>("Product is not found");
                 }
                 else
@@ -55,7 +55,7 @@ namespace SinemYoruc_Project
                 var product = hibernateRepositoryProductsOffer.Entities.Where(x => x.OfferAccountId == id).ToList();
                 if(product.Count == 0)
                 {
-                    Log.Error("AccountService.GetProduct", "Product is not found");
+                    Log.Error("AccountService.GetOfferProduct: Product is not found");
                     return new BaseResponse<IEnumerable<ProductsOffer>>("Product is not found");
                 }
                 else
@@ -83,6 +83,7 @@ namespace SinemYoruc_Project
                 }
                 else
                 {
+                    Log.Error("AccountService.RecievedOffer: You don't have any products that received an offer.");
                     return new BaseResponse<IEnumerable<Product>>("You don't have any products that received an offer.");
                 }
             }
@@ -121,12 +122,14 @@ namespace SinemYoruc_Project
                     }
                     else
                     {
+                        Log.Error("AccountService.AcceptOffer: Product is already sold");
                         return new BaseResponse<Product>("Product is already sold.");
                     }
                     
                 }
                 else
                 {
+                    Log.Error("AccountService.AcceptOffer: Offer is not found");
                     return new BaseResponse<Product>("Offer is not found.");
                 }
             }
@@ -165,11 +168,13 @@ namespace SinemYoruc_Project
                     }
                     else
                     {
+                        Log.Error("AccountService.RefuseOffer: Product is already sold");
                         return new BaseResponse<Product>("Product is already sold.");
                     }
                 }
                 else
                 {
+                    Log.Error("AccountService.RefuseOffer: Offer is not found");
                     return new BaseResponse<Product>("Offer is not found.");
                 }
             }

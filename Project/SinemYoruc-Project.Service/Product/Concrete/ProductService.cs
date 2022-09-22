@@ -54,7 +54,7 @@ namespace SinemYoruc_Project.Service
                 
                 if (category is null)
                 {
-                    Log.Error("ProductService.Insert");
+                    Log.Error("ProductService.Insert: Please enter valid Category Id");
                     return new BaseResponse<ProductDto>("Please enter valid Category Id");
                 }
                 else
@@ -110,11 +110,13 @@ namespace SinemYoruc_Project.Service
                     }
                     else
                     {
+                        Log.Error("ProductService.ProductsOffer: No offers can be made for this product.");
                         return new BaseResponse<Product>("No offers can be made for this product.");
                     }
                 }
                 else
                 {
+                    Log.Error("ProductService.ProductsOffer: Product is not found");
                     return new BaseResponse<Product>("Product is not found");
                 }
             }
@@ -136,6 +138,7 @@ namespace SinemYoruc_Project.Service
             var product = hibernateRepository.Where(x => x.Id == id).FirstOrDefault(); //Retrieving the product with the desired id
             if(product is null)
             {
+                Log.Error("ProductService.SoldProducts: Product is not found");
                 return new BaseResponse<Product>("Product is not found");
             }
             else
@@ -154,6 +157,7 @@ namespace SinemYoruc_Project.Service
                 }
                 else
                 {
+                    Log.Error("ProductService.SoldProducts: PProduct is already sold.");
                     return new BaseResponse<Product>("Product is already sold.");
                 }
                

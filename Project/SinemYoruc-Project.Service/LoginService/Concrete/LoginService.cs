@@ -34,12 +34,14 @@ namespace SinemYoruc_Project.Service
             {
                 if (tokenRequest is null)
                 {
+                    Log.Error("LoginService.GenerateToken: Please enter valid informations");
                     return new BaseResponse<TokenResponse>("Please enter valid informations.");
                 }
 
                 var account = hibernateRepository.Where(x => x.Email.Equals(tokenRequest.Email)).FirstOrDefault();
                 if (account is null)
                 {
+                    Log.Error("LoginService.GenerateToken: Please validate your informations that you provided");
                     return new BaseResponse<TokenResponse>("Please validate your informations that you provided.");
                 }
 
@@ -50,6 +52,7 @@ namespace SinemYoruc_Project.Service
 
                 if (!account.Password.Equals(tokenRequest.Password))
                 {
+                    Log.Error("LoginService.GenerateToken: Please validate your informations that you provided");
                     return new BaseResponse<TokenResponse>("Please validate your informations that you provided.");
                 }
 
